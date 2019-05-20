@@ -1,0 +1,9 @@
+server.port: 8090
+
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/online-shop
+    username: postgres
+    password: 123
+  jpa.hibernate.ddl-auto: create
+
