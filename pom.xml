@@ -8,7 +8,7 @@
 		<version>2.1.4.RELEASE</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>org.fasttrackit</groupId>
+	<groupId>org.fasttrackit.onlineshopapi</groupId>
 	<artifactId>online-shop-api</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>online-shop-api</name>
@@ -37,6 +37,11 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-autoconfigure</artifactId>
+			<version>2.1.4.RELEASE</version>
 		</dependency>
 	</dependencies>
 

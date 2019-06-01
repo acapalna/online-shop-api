@@ -1,6 +1,7 @@
 package org.fasttrackit.onlineshopapi;
 
 import org.fasttrackit.onlineshopapi.domain.Product;
+import org.fasttrackit.onlineshopapi.exception.ResourceNotFoundException;
 import org.fasttrackit.onlineshopapi.service.ProductService;
 import org.fasttrackit.onlineshopapi.transfer.CreateProductRequest;
 import org.junit.Test;
@@ -22,10 +23,34 @@ public class ProductServiceIntegrationTests {
 
 	@Test
 	public void testCreateProduct_whenValidRequest_thenReturnCreatedProduct() {
+        createProduct("Nivea", 99, 12);
+    }
+
+    @Test(expected = TransactionSystemException.class)
+    public void testCreateProduct_whenMissingMandatoryProperties_thenThrowException(){
         CreateProductRequest request = new CreateProductRequest();
-        request.setName("Fasole");
-        request.setQuantity(99);
-        request.setPrice(10);
+
+        productService.createProduct(request);
+    }
+
+    @Test
+    public void testGetProduct_whenExistingId_ThenReturnProduct() throws ResourceNotFoundException {
+        Product createdProduct = createProduct("Fasole", 22, 3);
+
+        Product product = productService.getProduct(createdProduct.getId());
+
+        assertThat(product, notNullValue());
+        assertThat(product.getId(), is(createdProduct.getId()));
+        assertThat(product.getName(), is(createdProduct.getName()));
+        assertThat(product.getPrice(), is(createdProduct.getPrice()));
+        assertThat(product.getQuantity(), is(createdProduct.getQuantity()));
+    }
+
+    private Product createProduct(String name, int qty, double price) {
+        CreateProductRequest request = new CreateProductRequest();
+        request.setName(name);
+        request.setQuantity(qty);
+        request.setPrice(price);
 
         Product createdProduct = productService.createProduct(request);
 
@@ -34,13 +59,8 @@ public class ProductServiceIntegrationTests {
         assertThat(createdProduct.getName(), is(request.getName()));
         assertThat(createdProduct.getPrice(), is(request.getPrice()));
         assertThat(createdProduct.getQuantity(), is(request.getQuantity()));
-    }
 
-    @Test(expected = TransactionSystemException.class)
-    public void testCreateProduct_whenMissingMandatoryProperties_thenThrowException(){
-        CreateProductRequest request = new CreateProductRequest();
-
-        productService.createProduct(request);
+        return createdProduct;
     }
 
 }
