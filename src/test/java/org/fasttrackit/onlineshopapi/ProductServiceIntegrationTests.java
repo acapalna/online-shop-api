@@ -46,6 +46,12 @@ public class ProductServiceIntegrationTests {
         assertThat(product.getQuantity(), is(createdProduct.getQuantity()));
     }
 
+    @Test(expected = ResourceNotFoundException.class)
+    public void  testGetProduct_whenNonExistingId_thenThrowResourceNotFoundException() throws ResourceNotFoundException {
+        productService.getProduct(9999L);
+    }
+
+
     private Product createProduct(String name, int qty, double price) {
         CreateProductRequest request = new CreateProductRequest();
         request.setName(name);
@@ -62,5 +68,4 @@ public class ProductServiceIntegrationTests {
 
         return createdProduct;
     }
-
 }
