@@ -16,13 +16,11 @@ public class Product {
     private String name;
     @NotNull
     @Min(0)
-    private int quantity;
+    private Integer quantity;
     @NotNull
-    private double price;
+    @Min(0)
+    private Double price;
     private String imagePath;
-
-
-
 
 
     public long getId() {
@@ -41,19 +39,19 @@ public class Product {
         this.name = name;
     }
 
-    public int getQuantity() {
+    public Integer getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(int quantity) {
+    public void setQuantity(Integer quantity) {
         this.quantity = quantity;
     }
 
-    public double getPrice() {
+    public Double getPrice() {
         return price;
     }
 
-    public void setPrice(double price) {
+    public void setPrice(Double price) {
         this.price = price;
     }
 
