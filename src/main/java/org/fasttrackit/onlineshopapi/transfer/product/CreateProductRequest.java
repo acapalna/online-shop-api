@@ -1,9 +1,9 @@
-package org.fasttrackit.onlineshopapi.transfer;
+package org.fasttrackit.onlineshopapi.transfer.product;
 
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
-public class UpdateProductRequest {
+public class CreateProductRequest {
 
     @NotNull
     private String name;
