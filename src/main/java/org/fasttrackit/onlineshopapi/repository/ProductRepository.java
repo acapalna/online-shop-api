@@ -18,6 +18,10 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     // named query using native sql
 //    @Query(value = "SELECT * FROM Product product WHERE name LIKE '%?1'", nativeQuery = true)
     Page<Product> findByPartialName(String partialName, Pageable pageable);
+    Page<Product> findByNameContainingAndPriceBetween(String partialName, Double minPrice, Double maxPrice, Pageable pageable);
+    Page<Product> findAllByPriceBetween(Double minPrice, Double maxPrice, Pageable pageable);
+    Page<Product> findAllByPriceGreaterThan(Double minPrice, Pageable pageable);
+    Page<Product> findAllByPriceLessThan(Double maxPrice, Pageable pageable);
 
 
 }

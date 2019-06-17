@@ -79,6 +79,18 @@ public class ProductService {
         else if (request.getPartialName() != null) {
             return productRepository.findByNameContaining(request.getPartialName(), pageable);
         }
+        else if (request.getPartialName() != null && request.getMinPrice() != null && request.getMaxPrice() != null) {
+            return productRepository.findByNameContainingAndPriceBetween(request.getPartialName(), request.getMinPrice(), request.getMaxPrice(), pageable);
+        }
+        else if (request.getMinPrice() != null && request.getMaxPrice() != null) {
+            return productRepository.findAllByPriceBetween(request.getMinPrice(), request.getMaxPrice(), pageable);
+        }
+        else if (request.getMinPrice() != null && request.getMaxPrice() == null) {
+            return productRepository.findAllByPriceGreaterThan(request.getMinPrice(), pageable);
+        }
+        else if (request.getMaxPrice() != null && request.getMinPrice() == null) {
+            return productRepository.findAllByPriceLessThan(request.getMaxPrice(), pageable);
+        }
         return productRepository.findAll(pageable);
     }
 
