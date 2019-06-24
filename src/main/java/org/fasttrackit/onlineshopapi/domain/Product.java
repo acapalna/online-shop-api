@@ -20,6 +20,7 @@ public class Product {
     @NotNull
     @Min(0)
     private Double price;
+    private Double priceBig;
     private String imagePath;
 
 
@@ -61,5 +62,13 @@ public class Product {
 
     public void setImagePath(String imagePath) {
         this.imagePath = imagePath;
+    }
+
+    public Double getPriceBig() {
+        return priceBig;
+    }
+
+    public void setPriceBig(Double priceBig) {
+        this.priceBig = priceBig;
     }
 }
