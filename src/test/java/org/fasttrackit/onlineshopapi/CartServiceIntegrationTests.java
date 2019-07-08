@@ -57,6 +57,41 @@ public class CartServiceIntegrationTests {
         assertThat(firstProduct, notNullValue());
         assertThat(firstProduct.getName(), is(product.getName()));
         assertThat(firstProduct.getId(), is(product.getId()));
+    }
 
+    @Test
+    public void testAddToCart_whenTwoValidRequest_thenCreateCart() throws ResourceNotFoundException {
+        Customer customer = customerSteps.createCustomer();
+        Product product1 = productSteps.createProduct("Branza Topita", 100, 4.5);
+        Product product2 = productSteps.createProduct("Smantana fermentata", 12, 7);
+
+        AddProductToCartRequest request = new AddProductToCartRequest();
+        request.setCustomerId(customer.getId());
+        request.setProductId(product1.getId()); //TODO use list of products
+        request.setProductId(product2.getId());
+
+        cartService.addProductToCart(request);
+
+        CartResponse cart = cartService.getCart(customer.getId());
+
+        assertThat(cart, notNullValue());
+        assertThat(cart.getCustomer(), notNullValue());
+        assertThat(cart.getCustomer().getId(), is(customer.getId()));
+        assertThat(cart.getId(), is(customer.getId()));
+        assertThat(cart.getCustomer().getFirstName(), is(customer.getFirstName()));
+        assertThat(cart.getCustomer().getLastName(), is(customer.getLastName()));
+
+        assertThat(cart.getProducts(), notNullValue());
+        assertThat(cart.getProducts(), hasSize(1));
+
+        ProductResponse firstProduct = cart.getProducts().iterator().next();
+        assertThat(firstProduct, notNullValue());
+        assertThat(firstProduct.getName(), is(product1.getName()));
+        assertThat(firstProduct.getId(), is(product1.getId()));
+
+        ProductResponse secondProduct = cart.getProducts().iterator().next();
+        assertThat(secondProduct, notNullValue());
+        assertThat(secondProduct.getName(), is(product1.getName()));
+        assertThat(secondProduct.getId(), is(product1.getId()));
     }
 }

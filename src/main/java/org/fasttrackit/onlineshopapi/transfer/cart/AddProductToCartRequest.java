@@ -3,7 +3,7 @@ package org.fasttrackit.onlineshopapi.transfer.cart;
 public class AddProductToCartRequest {
 
     private Long customerId;
-    private Long productId;
+    private Long productId;  //TODO use list of product ids
 
     public Long getCustomerId() {
         return customerId;
