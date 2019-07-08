@@ -1,6 +1,5 @@
 package org.fasttrackit.onlineshopapi;
 
-import org.fasttrackit.onlineshopapi.domain.Cart;
 import org.fasttrackit.onlineshopapi.domain.Customer;
 import org.fasttrackit.onlineshopapi.domain.Product;
 import org.fasttrackit.onlineshopapi.exception.ResourceNotFoundException;
@@ -18,8 +17,8 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.hasSize;
-import static org.hamcrest.core.Is.is;
-import static org.hamcrest.core.IsNull.notNullValue;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.notNullValue;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -34,7 +33,8 @@ public class CartServiceIntegrationTests {
     @Test
     public void testAddToCart_whenValidRequest_thenCreateCart() throws ResourceNotFoundException {
         Customer customer = customerSteps.createCustomer();
-        Product product = productSteps.createProduct("blana", 10, 22);
+        Product product = productSteps.createProduct("bec", 100, 102);
+
         AddProductToCartRequest request = new AddProductToCartRequest();
         request.setCustomerId(customer.getId());
         request.setProductId(product.getId());

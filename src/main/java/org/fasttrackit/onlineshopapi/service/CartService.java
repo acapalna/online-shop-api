@@ -14,8 +14,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import javax.transaction.Transactional;
+import org.springframework.transaction.annotation.Transactional;
 
 
 @Service
@@ -25,14 +24,12 @@ public class CartService {
     private final CartRepository cartRepository;
     private final CustomerService customerService;
     private final ProductService productService;
-    private final CartResponse cartResponse;
 
     @Autowired
-    public CartService(CartRepository cartRepository, CustomerService customerService, ProductService productService, CartResponse cartResponse) {
+    public CartService(CartRepository cartRepository, CustomerService customerService, ProductService productService) {
         this.cartRepository = cartRepository;
         this.customerService = customerService;
         this.productService = productService;
-        this.cartResponse = cartResponse;
     }
 
     @Transactional
@@ -66,36 +63,29 @@ public class CartService {
     @Transactional
     public CartResponse getCart(Long customerId) throws ResourceNotFoundException {
         Cart cart = cartRepository.findById(customerId)
-                .orElseThrow(() -> new ResourceNotFoundException("Cart " + customerId + " does not exist"));
+                .orElseThrow(() -> new ResourceNotFoundException(
+                        "Cart " + customerId + " does not exist"));
 
+        // using a DTO and reading all necessary properties (with getters)
+        // to avoid LazyInitializationException when properties are loaded lazily
         CustomerResponse customerResponse = new CustomerResponse();
         customerResponse.setId(cart.getCustomer().getId());
         customerResponse.setFirstName(cart.getCustomer().getFirstName());
         customerResponse.setLastName(cart.getCustomer().getLastName());
 
+        CartResponse cartResponse = new CartResponse();
+        cartResponse.setId(cart.getId());
+        cartResponse.setCustomer(customerResponse);
 
-        CartResponse response = new CartResponse();
-        response.setId(cart.getId());
-        response.setCustomer(customerResponse);
-
-        //ProductResponse productResponse = new ProductResponse();
         cart.getProducts().forEach(product -> {
             ProductResponse productResponse = new ProductResponse();
             productResponse.setId(product.getId());
             productResponse.setName(product.getName());
-            productResponse.setPrice(product.getPrice());
-            productResponse.setPriceBig(product.getPriceBig());
-            productResponse.setQuantity(product.getQuantity());
-            productResponse.setImagePath(product.getImagePath());
 
             cartResponse.getProducts().add(productResponse);
-
         });
 
 
-
-
-
-        return response;
+        return cartResponse;
     }
 }

@@ -3,6 +3,7 @@ package org.fasttrackit.onlineshopapi.transfer.cart;
 import org.fasttrackit.onlineshopapi.transfer.customer.CustomerResponse;
 import org.fasttrackit.onlineshopapi.transfer.product.ProductResponse;
 
+import java.util.HashSet;
 import java.util.Set;
 
 public class CartResponse {
@@ -11,7 +12,7 @@ public class CartResponse {
 
     private Long id;
     private CustomerResponse customer;
-    private Set<ProductResponse> products;
+    private Set<ProductResponse> products = new HashSet<>();
 
     public Long getId() {
         return id;
