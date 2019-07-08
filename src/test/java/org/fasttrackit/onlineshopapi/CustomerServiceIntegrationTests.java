@@ -2,6 +2,7 @@ package org.fasttrackit.onlineshopapi;
 
 import org.fasttrackit.onlineshopapi.domain.Customer;
 import org.fasttrackit.onlineshopapi.service.CustomerService;
+import org.fasttrackit.onlineshopapi.steps.CustomerSteps;
 import org.fasttrackit.onlineshopapi.transfer.customer.CreateCustomerRequest;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -19,23 +20,13 @@ import static org.hamcrest.core.IsNull.notNullValue;
 public class CustomerServiceIntegrationTests {
 
     @Autowired
-    CustomerService customerService;
+    private CustomerService customerService;
+
+    @Autowired
+    private CustomerSteps customerSteps;
 
     @Test
     public void testCreateCustomer_whenValidRequest_thenReturnCustomer(){
-        CreateCustomerRequest request = new CreateCustomerRequest();
-        request.setFirstName("Dorel");
-        request.setLastName("Tarnacop");
-        request.setPhoneNumber("0938120937812093");
-        request.setAddress("dasdasdasd adsa fdasf adsg fd");
-
-        Customer customer = customerService.createCustomer(request);
-
-        assertThat(customer, notNullValue());
-        assertThat(customer.getId(), greaterThan(0L));
-        assertThat(customer.getFirstName(), is(request.getFirstName()));
-        assertThat(customer.getLastName(), is(request.getLastName()));
-        assertThat(customer.getPhoneNumber(), is(request.getPhoneNumber()));
-        assertThat(customer.getAddress(), is(request.getAddress()));
+        customerSteps.createCustomer();
     }
 }
