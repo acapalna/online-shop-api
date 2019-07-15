@@ -5,6 +5,7 @@ import org.fasttrackit.onlineshopapi.exception.ResourceNotFoundException;
 import org.fasttrackit.onlineshopapi.service.ProductService;
 import org.fasttrackit.onlineshopapi.transfer.product.CreateProductRequest;
 import org.fasttrackit.onlineshopapi.transfer.product.GetProductRequest;
+import org.fasttrackit.onlineshopapi.transfer.product.ProductResponse;
 import org.fasttrackit.onlineshopapi.transfer.product.UpdateProductRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -29,10 +30,16 @@ public class ProductController {
 
     //endpoint
     @GetMapping
-    public ResponseEntity<Page<Product>> getProducts(GetProductRequest request, Pageable pageable){
-        Page<Product> response = productService.getProduct(request, pageable);
+    public ResponseEntity<Page<ProductResponse>> getProducts(GetProductRequest request, Pageable pageable){
+        Page<ProductResponse> response = productService.getProducts(request, pageable);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
+//
+//    @GetMapping
+//    public ResponseEntity<Page<Product>> getProduct(GetProductRequest request, Pageable pageable){
+//        Page<ProductResponse> response = productService.getProduct(request, pageable);
+//        return new ResponseEntity<>(response, HttpStatus.OK);
+//    }
 
     @PostMapping
     public ResponseEntity<Product> createProduct(@RequestBody @Valid CreateProductRequest request){

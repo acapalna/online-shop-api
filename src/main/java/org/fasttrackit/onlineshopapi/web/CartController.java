@@ -1,6 +1,5 @@
 package org.fasttrackit.onlineshopapi.web;
 
-import org.fasttrackit.onlineshopapi.domain.Customer;
 import org.fasttrackit.onlineshopapi.exception.ResourceNotFoundException;
 import org.fasttrackit.onlineshopapi.service.CartService;
 import org.fasttrackit.onlineshopapi.transfer.cart.AddProductToCartRequest;
