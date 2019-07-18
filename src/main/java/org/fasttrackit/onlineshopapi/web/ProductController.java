@@ -34,12 +34,6 @@ public class ProductController {
         Page<ProductResponse> response = productService.getProducts(request, pageable);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
-//
-//    @GetMapping
-//    public ResponseEntity<Page<Product>> getProduct(GetProductRequest request, Pageable pageable){
-//        Page<ProductResponse> response = productService.getProduct(request, pageable);
-//        return new ResponseEntity<>(response, HttpStatus.OK);
-//    }
 
     @PostMapping
     public ResponseEntity<Product> createProduct(@RequestBody @Valid CreateProductRequest request){
